@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
 namespace SignalR.Practical
@@ -19,6 +20,16 @@ namespace SignalR.Practical
         public Task SendMessageToUser(string connectionId, string message)
         {
             return Clients.Client(connectionId).SendAsync("ReceiveMessage", message);
+        }
+
+        public Task JoinGroup(string group)
+        {
+            return Groups.AddToGroupAsync(Context.ConnectionId, group);
+        }
+
+        public Task SendMessageToGroup(string group, string message)
+        {
+            return Clients.Group(group).SendAsync("ReceiveMessage", message);
         }
 
         public override async Task OnConnectedAsync()

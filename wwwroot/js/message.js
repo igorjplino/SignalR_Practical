@@ -43,11 +43,24 @@ document.getElementById("sendButton").addEventListener("click", function(e) {
             return console.error(err.toString());
         });
     }
+    else if (groupValue === "PrivateGroup") {
+        connection.invoke("SendMessageToGroup", "PrivateGroup", message).catch(function(err) {
+            return console.error(err.toString());
+        });
+    }
     else {
         connection.invoke("SendMessageToUser", groupValue, message).catch(function(err) {
             return console.error(err.toString());
         });
     }
 
+    e.preventDefault();
+});
+
+document.getElementById("joinGroup").addEventListener("click", function (e) {
+    connection.invoke("JoinGroup", "PrivateGroup").catch(function (err) {
+        return console.error(err.toString());
+    });
+    
     e.preventDefault();
 });
